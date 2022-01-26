@@ -48,7 +48,7 @@ def change_to_numpy(df: pd.DataFrame) -> np.ndarray:
 
 
 def save_numpy(arr, filename):
-    np.savez_compressed(f"data/processed/{filename}", arr)
+    np.savez_compressed(f"data/processed/{filename}", result=arr)
 
 
 def main():
