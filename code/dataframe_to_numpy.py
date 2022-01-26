@@ -12,9 +12,9 @@ TIME_WINDOW = 24
 
 def load_from_csv(death: bool) -> pd.DataFrame:
     if death:
-        filename = "result_death.csv"
+        filename = "death_df.csv"
     elif not death:
-        filename = "result_live.csv"
+        filename = "live_df.csv"
 
     return pd.read_csv(Path(PROJECT_PATH, f"data/processed/{filename}"))
 
@@ -52,14 +52,15 @@ def save_numpy(arr, filename):
 
 
 def main():
-    death_df = load_from_csv(death = True)
-    live_df = load_from_csv(death = False)
-    
+    death_df = load_from_csv(death=True)
+    live_df = load_from_csv(death=False)
+
     death_arr = change_to_numpy(death_df)
     live_arr = change_to_numpy(live_df)
 
     save_numpy(death_arr, "death_numpy.npz")
     save_numpy(live_arr, "live_numpy.npz")
+
 
 if __name__ == "__main__":
     main()
