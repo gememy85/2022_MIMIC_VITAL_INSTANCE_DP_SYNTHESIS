@@ -1,4 +1,4 @@
-# vital sign data synthesis
+# 2022_MIMIC_VITAL_INSTANCE_DP_SYNTHESIS
 
 - Author: Wonseok Jang
 - Date: 2022/1/26
@@ -19,4 +19,4 @@
 - [MIMICIV](https://physionet.org/content/mimiciv/1.0/)
 
 
-# 2022_MIMIC_VITAL_INSTANCE_DP_SYNTHESIS
+
