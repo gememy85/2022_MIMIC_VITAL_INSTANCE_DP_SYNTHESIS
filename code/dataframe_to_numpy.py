@@ -1,7 +1,9 @@
+#%%
 from pathlib import Path
 import pandas as pd
 import numpy as np
 
+#%%
 try:
     PROJECT_PATH = Path(__file__).parents[1]
 except NameError:
@@ -9,7 +11,7 @@ except NameError:
 
 TIME_WINDOW = 24
 
-
+#%%
 def load_from_csv(death: bool) -> pd.DataFrame:
     if death:
         filename = "death_df.csv"
@@ -30,7 +32,7 @@ def change_to_numpy(df: pd.DataFrame) -> np.ndarray:
         .sort_values(["stay_id", "hour"])
         .fillna(-1)
     )
-
+    print(filled_df)
     target_variables = ["heart_rate", "sbp", "dbp", "mbp", "resp_rate", "spo2"]
 
     result = np.empty(
@@ -62,5 +64,21 @@ def main():
     save_numpy(live_arr, "live_numpy.npz")
 
 
-if __name__ == "__main__":
-    main()
+#%%
+death_df = load_from_csv(death=True)
+death_df
+
+#%%
+# death_arr = change_to_numpy(death_df)
+id_list = death_df.stay_id.unique()
+hour = pd.DataFrame({"hour": range(24)})
+stay_id = pd.DataFrame({"stay_id": id_list})
+# stay_id_hour_df = pd.merge(stay_id, hour, how="cross")
+
+#%%
+sta
+#%%
+# if __name__ == "__main__":
+#     main()
+
+# %%
