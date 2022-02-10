@@ -14,9 +14,9 @@ TIME_WINDOW = 24
 #%%
 def load_from_csv(death: bool) -> pd.DataFrame:
     if death:
-        filename = "death_df.csv"
+        filename = "death_df_interpolated.csv"
     elif not death:
-        filename = "live_df.csv"
+        filename = "live_df_interpolated.csv"
 
     return pd.read_csv(Path(PROJECT_PATH, f"data/processed/{filename}"))
 
@@ -65,20 +65,6 @@ def main():
 
 
 #%%
-death_df = load_from_csv(death=True)
-death_df
-
 #%%
-# death_arr = change_to_numpy(death_df)
-id_list = death_df.stay_id.unique()
-hour = pd.DataFrame({"hour": range(24)})
-stay_id = pd.DataFrame({"stay_id": id_list})
-# stay_id_hour_df = pd.merge(stay_id, hour, how="cross")
-
-#%%
-sta
-#%%
-# if __name__ == "__main__":
-#     main()
-
-# %%
+if __name__ == "__main__":
+    main()

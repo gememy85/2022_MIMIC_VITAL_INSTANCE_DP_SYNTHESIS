@@ -7,13 +7,19 @@ from argparse import Namespace
 from pathlib import Path
 from copy import deepcopy
 from multiprocessing import Pool, freeze_support
+import os, sys
+
+# append pydp in PATH
+CWD = Path().cwd()
+sys.path.append(CWD.joinpath('pydp').as_posix())
 
 args = Namespace(
-    original_file = '../data/processed/split_dp_log_result/processed/0_noise.csv',
-    output_file = '../data/processed/211108_outputs/10000_noise.csv',
-    epsilon = 10000
+    DATA_DIR = CWD.joinpath('data/processed'),
+    OUTPUT_DIR = CWD.joinpath('data/output'),
+    epsilon = 0.1,
+    ORIGNIAL_FILE_NAME = "",
+    OUTPUT_NAME = "noise_0.1.csv",
 )
-
 
 
 #%%
@@ -44,18 +50,18 @@ df.columns = [i for i in range(0,len(df.columns))]
 # input : processed original Data
 
 ## 0. define laplace mechanism
-def get_differential_privacy_value(value, epsilon):
+# def get_differential_privacy_value(value, epsilon):
     
-    np.array(value)
-    def pdf(x):
-        b = 2 / (epsilon)
-        c = 1 - 0.5 * (np.exp(-(value+1)/b) + np.exp(-(1 - value)/b))
-        return 1 / (b * c * 2) * np.exp(-np.absolute(x - value)/b)
+#     np.array(value)
+#     def pdf(x):
+#         b = 2 / (epsilon)
+#         c = 1 - 0.5 * (np.exp(-(value+1)/b) + np.exp(-(1 - value)/b))
+#         return 1 / (b * c * 2) * np.exp(-np.absolute(x - value)/b)
 
-    elements = np.linspace(-1, 1, 10**4)
-    probabilities = pdf(elements)
-    probabilities /= np.sum(probabilities)
-    return np.random.choice(elements, size=1, p=probabilities.reshape(-1)).item()
+#     elements = np.linspace(-1, 1, 10**4)
+#     probabilities = pdf(elements)
+#     probabilities /= np.sum(probabilities)
+#     return np.random.choice(elements, size=1, p=probabilities.reshape(-1)).item()
 
 
 #%%
