@@ -1,7 +1,7 @@
 # import os, sys
 # sys.path.append('../')
 
-from timeDP2.utils import *
+from timeDP2.utils.functions import *
 from timeDP2.mechanism import bounded_laplace_mechanism as BLM
 from timeDP2.mechanism import laplace_mechanism as LM
 
