@@ -13,6 +13,9 @@ import os, sys
 CWD = Path().cwd()
 sys.path.append(CWD.joinpath('pydp').as_posix())
 
+# loading bounded laplace mechanism 
+from timedp.bounded_laplace_mechanism import boundedlaplacemechanism as BLM
+
 args = Namespace(
     DATA_DIR = CWD.joinpath('data/processed'),
     OUTPUT_DIR = CWD.joinpath('data/output'),
