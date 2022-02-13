@@ -1,5 +1,4 @@
-# import os, sys
-# sys.path.append('../')
+
 
 from timeDP2.utils.functions import *
 from timeDP2.mechanism import bounded_laplace_mechanism as BLM
@@ -40,10 +39,14 @@ class Vector_creator:
         self.vector = vector
         self.vector_length = len(vector)
         self.timedp = timedp
+        self.mechanism_type =timedp.mechanism_type
         self.extended_vector = self.make_extended_vector()
         self.coordinates = self.make_coordinates()
         self.gradient_list = self.prepare_for_gradient()
-    
+        self.new_gradients = self.make_new_gradient()
+        self.new_function_forms = self.calculate_function_form()
+        self.new_vector = self.make_new_vector()
+        
     def make_extended_vector(self):
         '''
         makes extended vector
@@ -58,14 +61,42 @@ class Vector_creator:
         xs = [x for x in x in range(0, extend_vector_length)]
         return make_coordinate_list(xs, self.extended_vector, 2)
     
+    
     def prepare_for_gradient(self):
         return give_calculated_gradient_list(self.extended_vector, step=2)
     
-    def make_new_gradient(self):
-        pass
+    def create_boundary(self, gradient):
+        if gradient < 0 :
+            return 2*gradient, 0
+        elif gradient > 0 :
+            return 0, 2*gradient
+        else :
+            return -1, 1
+            
+    def create_boundary_list(self):
+        return list(map(self.create_boundary, self.gradient_list))
     
-    def make_new_value_based_on_new_gradient:
-        pass
+    def make_new_gradient(self):
+        if self.mechanism_type == 'laplace':
+            return list(map(self.timedp(sens=0.1), self.gradient_list))
+        else :
+            boundary_list = self.create_boundary_list()
+            return list(map(lambda x, y : self.timedp(x, y), self.gradient_list, boundary_list))
+    
+    def calculate_function_form(self):
+        '''
+        list of (gradient and b)
+        '''
+        return list(map(lambda x, y : calculate_linear_function_form(x,y), self.coordinates, self.gradient_list))
+    
+    def make_new_value_based_on_new_gradient(self, gradient, b, x):
+        y = x*gradient + b
+        return y
+    
+    def make_new_vector(self):
+        extend_vector_length = self.vector_length * 2
+        xs = [x for x in x in range(0, extend_vector_length)][1::2]
+        return [self.make_new_value_based_on_new_gradient(g,b,x) for (g, b), x, in zip(self.new_function_forms, xs)]
         
         
         
