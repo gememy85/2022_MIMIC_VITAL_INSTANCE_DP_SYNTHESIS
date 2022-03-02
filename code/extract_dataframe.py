@@ -114,7 +114,7 @@ def main():
     death_result = aggregate_by_hourly_row(death_result)
     live_result = aggregate_by_hourly_row(live_result)
     save_to_csv(death_result, "death_df.csv")
-    save_to_csv(death_result, "live_df.csv")
+    save_to_csv(live_result, "live_df.csv")
 
 
 if __name__ == "__main__":

@@ -13,10 +13,12 @@ def boundedlaplacemechanism(value, D: tuple, b, epsilon, delta):
     b : variance -> requires checkup. 
     sensitivity : the minimal difference 
     '''
+    if type(D) == None :
+        return 0
     # assign boundaries
     l, u  = D
 
-    if value not in range(l,u+1): return 0
+    if (value < l) | (value > u) : return 0
     
     # Theorem 4.4(Fixed Point)
     dQ = abs(u - l)
